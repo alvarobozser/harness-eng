@@ -149,3 +149,4 @@ Sesión nueva con session-summary.md presente:
   Leader anuncia: "Retomando desde [Task N]. Contexto: [resumen de 2 líneas]."
   Leader activa: Implementer (si la task es de implementación)
 ```
+### Initialization: automatic via Leader

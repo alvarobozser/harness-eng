@@ -81,3 +81,4 @@ Para cada task en el tech-plan:
    ```
 3. Anuncia: "Review RECHAZADO. Issues: [lista]. Devolviendo al Leader."
 4. El Leader activará al Implementer con los issues como contexto
+   - Read: `.harness/memory/current-progress.json`
