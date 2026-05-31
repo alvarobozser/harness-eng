@@ -1,0 +1,18 @@
+# CodeGraph — índice local generado automáticamente
+.codegraph/
+
+# Configuración local de agentes (Claude Code, Gemini, etc.)
+.claude/
+.gemini/
+.mcp.json
+
+# Memory de sesión — específica de cada proyecto
+.harness/memory/session-summary.md
+
+# Planes generados en cada sesión — se recrean por proyecto
+.harness/research/research-plan.md
+.harness/tech/tech-plan.md
+
+# OS
+.DS_Store
+Thumbs.db
