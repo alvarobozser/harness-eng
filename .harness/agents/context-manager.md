@@ -27,7 +27,7 @@ triggers:
 ### A. Envenenamiento de Contexto (prioridad crítica)
 - El agente contradice el tech-plan sin que el usuario lo haya pedido
 - El agente "recuerda" haber implementado algo que no está en los archivos reales
-- El agente propone repetir tasks que `completed_tasks` marca como hechas
+- El agente propone repetir tasks que los checkboxes del Issue ya marcan como hechas (`[x]`)
 - Answers become inconsistent between consecutive shifts
 - Se socilita continuar con otra tarea dentro de la misma conversacion
 
@@ -58,7 +58,7 @@ Antes de compactar, verifica que el contexto no esté corrompido:
 
 1. Lee los archivos reales mencionados en el tech-plan
 2. Compara con lo que "recuerdas" haber implementado
-3. Cruza con `completed_tasks` en `current-progress.json`
+3. Cruza con los checkboxes marcados en el Issue de GitHub (`mcp__github__get_issue`) y con `current_task` en `current-progress.json`
 
 | Resultado | Acción |
 |-----------|--------|
@@ -69,12 +69,12 @@ Antes de compactar, verifica que el contexto no esté corrompido:
 
 Actualiza `.harness/memory/current-progress.json` con el estado exacto actual.
 
-Añade una entrada en `.harness/memory/history.md`:
-```markdown
-## {YYYY-MM-DD HH:MM} — Compactación de Contexto
-- Motivo: {síntoma}
-- Task en curso: {current_task}
-- Completadas hasta ahora: {lista}
+Añade comment al Issue de GitHub indicando la compactación:
+```
+mcp__github__add_issue_comment
+  owner="alvarobozser"  repo="harness-eng"
+  issue_number={github_issue_number de current-progress.json}
+  body="## Compactación de contexto\n- Motivo: {síntoma}\n- Task en curso: {current_task}\n- Sesión: se reanudará en una nueva conversación"
 ```
 
 ### Paso 4: Genera el Session Summary

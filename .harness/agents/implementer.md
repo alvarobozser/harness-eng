@@ -36,6 +36,14 @@ Lee `.harness/memory/current-progress.json` para identificar la primera task pen
 
 ### 2. Loop por cada Task Pendiente
 
+Al iniciar, lee el Issue para ver qué checkboxes quedan sin marcar:
+```
+mcp__github__get_issue
+  owner="alvarobozser"  repo="harness-eng"
+  issue_number={github_issue_number de current-progress.json}
+```
+Las líneas `- [ ] Task N: nombre` son las tasks pendientes.
+
 ```
 → Anuncia: "Task N: {nombre}"
 → Localiza los archivos de la task:
@@ -45,7 +53,13 @@ Lee `.harness/memory/current-progress.json` para identificar la primera task pen
 → Ejecuta la validación de la task
 
   Si PASA:
-    → Actualiza current-progress.json (ver formato abajo)
+    → Actualiza current-progress.json (solo current_task y files_modified)
+    → Marca el checkbox en el Issue: lee el body con get_issue, reemplaza
+      `- [ ] Task N: nombre`  →  `- [x] Task N: nombre`
+      y actualiza con:
+      mcp__github__update_issue
+        owner="alvarobozser"  repo="harness-eng"
+        issue_number={N}  body="{body actualizado}"
     → Anuncia: "Task N completada."
     → Siguiente task
 
@@ -62,10 +76,10 @@ Lee `.harness/memory/current-progress.json` para identificar la primera task pen
 {
   "session_id": "YYYY-MM-DD-NNN",
   "feature": "{nombre del feature}",
+  "github_issue_number": {N},
+  "github_issue_url": "{url}",
   "status": "in_progress",
   "current_task": "Task N: nombre",
-  "completed_tasks": ["Task 1: nombre", "Task 2: nombre"],
-  "pending_tasks": ["Task N+1: nombre"],
   "files_modified": ["ruta/archivo.ext"],
   "blocked_reason": null,
   "last_updated": "{ISO timestamp}"
@@ -76,10 +90,17 @@ Lee `.harness/memory/current-progress.json` para identificar la primera task pen
 
 1. Ejecuta la validación global del tech-plan
 2. Si pasa:
-   - Actualiza `status` → `"awaiting_review"`
+   - Actualiza `status` → `"awaiting_review"` en `current-progress.json`
+   - Añade comment final al Issue:
+     ```
+     mcp__github__add_issue_comment
+       owner="alvarobozser"  repo="harness-eng"
+       issue_number={N}
+       body="## Implementación completa ✓\nTodas las tasks completadas. Pendiente de review.\n\n**Archivos modificados:**\n{lista de files_modified}"
+     ```
    - Anuncia: "Todas las tasks completadas. Devolviendo control al Leader para review."
 3. Si falla:
-   - Actualiza `status` → `"blocked"`
+   - Actualiza `status` → `"blocked"` en `current-progress.json`
    - Reporta qué falló
    - Espera instrucción humana
 

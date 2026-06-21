@@ -107,16 +107,28 @@ Si hay ambigüedad (ej. monorepo): pregunta al usuario antes de continuar.
 - [ ] ¿El orden evita dependencias circulares?
 - [ ] ¿Hay validación específica para cada task?
 
+### 3b. Actualiza el Issue con el checklist de tasks
+
+Lee `github_issue_number` de `.harness/memory/current-progress.json` y actualiza el Issue:
+```
+mcp__github__update_issue
+  owner="alvarobozser"
+  repo="harness-eng"
+  issue_number={N}
+  body="## Objetivo\n{resumen, 2–3 líneas}\n\n## Tasks\n- [ ] Task 1: {nombre}\n- [ ] Task 2: {nombre}\n...\n\n## Criterios de Aceptación\n- [ ] {criterio}\n\n## Validación Global\n`{comando}`"
+  labels=["harness", "status:in-progress"]
+```
+
 ### 4. Actualiza memory
 
 Fusiona estos campos en `.harness/memory/current-progress.json`:
 ```json
 {
   "status": "awaiting_plan_approval",
-  "pending_tasks": ["Task 1: nombre", "Task 2: nombre"],
   "last_updated": "{ISO timestamp}"
 }
 ```
+(`pending_tasks` y `completed_tasks` ya no van en el JSON — viven en los checkboxes del Issue.)
 
 ### 5. PAUSA — espera aprobación
 

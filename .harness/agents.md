@@ -44,17 +44,30 @@ agents:
      > codegraph init -i
      > ```
      > Continúo sin CodeGraph. Puedes instalarlo en cualquier momento y reiniciar la sesión."
+2b. Consulta Issues abiertos en GitHub con label `harness`:
+    ```
+    mcp__github__list_issues  owner="alvarobozser"  repo="harness-eng"  state="open"  labels=["harness"]
+    ```
+    - Si hay Issues abiertos:
+      - Muéstralos numerados: `#N — título (URL)`
+      - Pregunta: "Hay [N] feature(s) pendiente(s) en GitHub. ¿Retomamos uno o empezamos uno nuevo?"
+      - Si el usuario elige retomar: lee el Issue con `mcp__github__get_issue` y sincroniza `current-progress.json`
+        con `github_issue_number` y `github_issue_url`; el estado de tasks está en los checkboxes del Issue
+    - Si no hay Issues abiertos: espera nuevo requisito del usuario
 3. Lee `.harness/memory/current-progress.json`
 4. Activa el agente según el estado:
 
 | `status` en memory | Agente a activar |
 |--------------------|-----------------|
-| No existe / `done` | Espera requisito del usuario |
+| No existe / `done` | Consulta GitHub (paso 2b) y espera requisito |
 | `awaiting_research_approval` | Muestra research-plan.md al usuario y espera aprobación |
 | `awaiting_plan_approval` | Muestra tech-plan.md al usuario y espera aprobación |
-| `in_progress` | Lee `.harness/agents/implementer.md` → retoma la tarea |
+| `in_progress` | Lee `.harness/agents/implementer.md` → retoma la tarea (tasks pendientes en el Issue de GitHub) |
 | `awaiting_review` | Lee `.harness/agents/reviewer.md` |
 | `blocked` | Reporta el `blocked_reason` y espera instrucción humana |
+
+> **Nota**: `completed_tasks` y `pending_tasks` ya no están en el JSON local.
+> Para saber qué tasks quedan, leer los checkboxes del Issue con `mcp__github__get_issue`.
 
 ---
 

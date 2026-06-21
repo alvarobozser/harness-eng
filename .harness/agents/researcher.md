@@ -36,6 +36,30 @@ codegraph_context "{requisito en una línea}"
 ```
 Usa el resultado para entender qué ya existe antes de preguntar. Evita preguntar sobre cosas que ya puedes ver en el grafo.
 
+### 0b. Crea el Issue de Tracking en GitHub
+
+Antes de hacer preguntas, crea el Issue de seguimiento:
+```
+mcp__github__create_issue
+  owner="alvarobozser"
+  repo="harness-eng"
+  title="{nombre del feature en una línea}"
+  body="## Objetivo\n{descripción inicial del requisito}\n\n*Issue gestionado por el harness. Las tasks se añadirán tras el planning.*"
+  labels=["harness", "status:research"]
+```
+Guarda el número e URL del Issue devueltos.
+
+Actualiza `.harness/memory/current-progress.json` con los datos del Issue:
+```json
+{
+  "feature": "{nombre}",
+  "github_issue_number": {número},
+  "github_issue_url": "{url}",
+  "status": "awaiting_research_approval",
+  "last_updated": "{ISO timestamp}"
+}
+```
+
 ### 1. Preguntas de Clarificación
 
 Haz máximo 5 preguntas, ordenadas por impacto en el diseño:
@@ -80,6 +104,7 @@ Fusiona estos campos en `.harness/memory/current-progress.json`:
   "last_updated": "{ISO timestamp}"
 }
 ```
+(`github_issue_number` y `github_issue_url` ya deben estar en el JSON del paso 0b.)
 
 ### 4. PAUSA — espera aprobación
 
@@ -88,5 +113,14 @@ Fusiona estos campos en `.harness/memory/current-progress.json`:
 No continues hasta recibir aprobación explícita.
 
 ### 5. Tras aprobación
+
+Añade comment al Issue con el resumen del research:
+```
+mcp__github__add_issue_comment
+  owner="alvarobozser"
+  repo="harness-eng"
+  issue_number={github_issue_number de current-progress.json}
+  body="## Research aprobado ✓\n{resumen del research-plan en 3–5 puntos clave}"
+```
 
 Devuelve el control al Leader: "Research aprobado. El Leader activará al Planner."

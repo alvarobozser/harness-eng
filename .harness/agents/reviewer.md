@@ -63,22 +63,43 @@ Para cada task en el tech-plan:
    ```json
    { "status": "done", "blocked_reason": null, "last_updated": "{ISO timestamp}" }
    ```
-2. Añade entrada a `.harness/memory/history.md`:
-   ```markdown
-   ## {YYYY-MM-DD} — {nombre del feature}
-   - Estado: DONE
-   - Tasks completadas: {N}
-   - Archivos modificados: {lista de files_modified}
+2. Cierra el Issue en GitHub:
    ```
-3. Anuncia: "Review completado. Feature APROBADO. Todo en orden."
+   mcp__github__update_issue
+     owner="alvarobozser"  repo="harness-eng"
+     issue_number={github_issue_number de current-progress.json}
+     state="closed"
+     labels=["harness", "status:done"]
+   ```
+3. Añade comment de cierre:
+   ```
+   mcp__github__add_issue_comment
+     owner="alvarobozser"  repo="harness-eng"
+     issue_number={N}
+     body="## Review: APROBADO ✓\n- Tasks completadas: {N}\n- Archivos modificados: {lista de files_modified}\n- Fecha: {ISO date}"
+   ```
+4. Anuncia: "Review completado. Feature APROBADO. Issue cerrado en GitHub."
 
 **Si algo falla:**
 
 1. Lista exactamente qué criterio no se cumplió y en qué archivo/línea
-2. Actualiza:
+2. Actualiza `.harness/memory/current-progress.json`:
    ```json
    { "status": "blocked", "blocked_reason": "{descripción del issue}" }
    ```
-3. Anuncia: "Review RECHAZADO. Issues: [lista]. Devolviendo al Leader."
-4. El Leader activará al Implementer con los issues como contexto
-   - Read: `.harness/memory/current-progress.json`
+3. Añade comment al Issue con los blockers:
+   ```
+   mcp__github__add_issue_comment
+     owner="alvarobozser"  repo="harness-eng"
+     issue_number={N}
+     body="## Review: BLOQUEADO ✗\n{lista exacta de criterios que no se cumplieron, con archivo y línea}"
+   ```
+4. Cambia el label del Issue:
+   ```
+   mcp__github__update_issue
+     owner="alvarobozser"  repo="harness-eng"
+     issue_number={N}
+     labels=["harness", "status:blocked"]
+   ```
+5. Anuncia: "Review RECHAZADO. Issues añadidos al GitHub Issue #{N}. Devolviendo al Leader."
+6. El Leader activará al Implementer con los issues como contexto
