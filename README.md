@@ -79,10 +79,25 @@ Cualquier agente detecta síntoma
 
 ## Instalación en un proyecto
 
-```bash
-# Copia el harness al proyecto
-cp -r CLAUDE.md AGENTS.md .harness/ tu-proyecto/
+Clona este repo y ejecuta el script de instalación apuntando al directorio de tu proyecto:
 
+```bash
+# macOS / Linux
+git clone https://github.com/alvarobozser/harness-eng.git
+./harness-eng/install.sh /ruta/a/tu-proyecto
+```
+
+```powershell
+# Windows
+git clone https://github.com/alvarobozser/harness-eng.git
+.\harness-eng\install.ps1 -Target C:\ruta\a\tu-proyecto
+```
+
+El script copia `CLAUDE.md`, `AGENTS.md` y toda la carpeta `.harness/` (agentes, skills, memoria vacía).
+
+> Tras instalar, edita las referencias a `owner`/`repo` en `.harness/agents.md` y los agentes individuales para apuntar a tu repositorio de GitHub.
+
+```bash
 # Opcional pero recomendado para proyectos grandes
 cd tu-proyecto
 codegraph init -i
