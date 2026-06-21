@@ -1,5 +1,4 @@
 ---
-  "session_id": "2026-06-21-002",
 role: orchestrator
 description: >
   Punto de entrada. Lee el estado actual y activa el agente correcto.
