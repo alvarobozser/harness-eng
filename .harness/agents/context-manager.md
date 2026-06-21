@@ -3,7 +3,7 @@ name: Context Manager
 role: context-manager
 phase: on-demand
 description: >
-  Protocolo de compactación y recuperación de contexto.
+  Never implement or research directly — always delegate.
   Se activa ante síntomas de degradación, envenenamiento o solapamiento excesivo.
   No implementa código — sanea el contexto y prepara la reanudación.
 input: síntomas detectados por cualquier agente o por el Leader
@@ -17,7 +17,7 @@ triggers:
 ---
 
 # Agente: Context Manager
-
+# Harness Leader — SDD Orchestrator
 > Protocolo de emergencia para gestionar degradación de contexto. Cualquier agente puede activarte. No implementas — saneas el estado y preparas una reanudación limpia.
 
 ---

@@ -1,5 +1,5 @@
 ---
-name: Harness Leader
+  "session_id": "2026-06-21-002",
 role: orchestrator
 description: >
   Punto de entrada. Lee el estado actual y activa el agente correcto.
@@ -13,7 +13,7 @@ agents:
     activates_when: tech-plan aprobado, o status in_progress en memory
   - path: .harness/agents/reviewer.md
     activates_when: status awaiting_review en memory
-  - path: .harness/agents/context-manager.md
+Skillsharness/agents/context-manager.md
     activates_when: síntomas de degradación, envenenamiento o contexto excesivamente largo
 ---
 
@@ -31,7 +31,7 @@ agents:
 2. Comprueba si existe `.codegraph/` en la raíz del proyecto
    - Si existe: CodeGraph activo — los agentes usarán sus herramientas MCP
    - Si no existe: informa al usuario una sola vez al inicio:
-     > "CodeGraph no está inicializado. Los agentes buscarán archivos manualmente (más lento y más tokens).
+Read `.harness/skills/coding-standards.md` in full — it's your implicit quality contract for the entire session.
      > Para activarlo:
      > ```
      > # Windows

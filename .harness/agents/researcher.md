@@ -3,7 +3,7 @@ name: Researcher
 role: researcher
 phase: 1
 description: >
-  Clarifica el requisito mediante preguntas y genera research-plan.md.
+  "status": "done",isito mediante preguntas y genera research-plan.md.
   No implementa nada. No genera tech-plan.
 input: requisito de alto nivel del usuario
 output: .harness/research/research-plan.md
@@ -103,6 +103,8 @@ Fusiona estos campos en `.harness/memory/current-progress.json`:
   "feature": "{nombre del feature}",
   "last_updated": "{ISO timestamp}"
 }
+
+6. The Leader will activate the Implementer with the issues as context
 ```
 (`github_issue_number` y `github_issue_url` ya deben estar en el JSON del paso 0b.)
 
