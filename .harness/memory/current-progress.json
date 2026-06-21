@@ -1,21 +1,17 @@
 {
-  "session_id": "2026-06-21-001",
-  "feature": "GitHub como fuente de verdad de trazabilidad",
-  "github_issue_number": null,
-  "github_issue_url": null,
-  "status": "done",
-  "current_task": null,
+  "session_id": "2026-06-21-002",
+  "feature": "skill coding-standards para el Implementer",
+  "github_issue_number": 1,
+  "github_issue_url": "https://github.com/alvarobozser/harness-eng/issues/1",
+  "status": "in_progress",
+  "current_task": "Task 4: commit y push",
   "files_modified": [
-    ".harness/memory/current-progress.json",
-    ".harness/memory/history.md",
-    ".harness/agents.md",
-    ".harness/agents/researcher.md",
-    ".harness/agents/planner.md",
+    ".gitignore",
+    ".harness/skills/coding-standards.md",
     ".harness/agents/implementer.md",
-    ".harness/agents/reviewer.md",
-    ".harness/agents/context-manager.md",
-    ".harness/tech/tech-plan.md"
+    "README.md",
+    ".harness/memory/current-progress.json"
   ],
   "blocked_reason": null,
-  "last_updated": "2026-06-21T10:00:00Z"
+  "last_updated": "2026-06-21T10:02:00Z"
 }

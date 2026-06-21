@@ -31,6 +31,7 @@ next: reviewer (tras completar todas las tasks)
 
 ### 1. Lee
 
+Lee `.harness/skills/coding-standards.md` completo — es tu contrato de calidad implícito para toda la sesión.
 Lee `.harness/tech/tech-plan.md` completo.
 Lee `.harness/memory/current-progress.json` para identificar la primera task pendiente.
 

@@ -13,10 +13,12 @@ Entorno de control para agentes IA basado en Spec Driven Development. Define có
 │   ├── implementer.md     ← Ejecuta el tech-plan task por task
 │   ├── reviewer.md        ← Valida contra criterios de aceptación
 │   └── context-manager.md ← Compacta contexto, detecta envenenamiento
+├── skills/
+│   └── coding-standards.md ← Contrato de calidad: el Implementer lo lee antes de codificar
 ├── research/              ← research-plan.md generado por Researcher
 ├── tech/                  ← tech-plan.md generado por Planner
 └── memory/
-    ├── current-progress.json  ← caché de sesión (estado + referencia al Issue de GitHub)
+    ├── current-progress.json session  ← cache (status + reference to GitHub Issue)
     ├── history.md             ← pointer a GitHub Issues (el historial real está en GitHub)
     └── session-summary.md     ← generado por Context Manager al compactar
 ```
@@ -27,7 +29,7 @@ Entorno de control para agentes IA basado en Spec Driven Development. Define có
 Requisito del usuario
         ↓
    Leader evalúa                          ← también consulta Issues abiertos en GitHub
-   (SIMPLE / MEDIO / DIFÍCIL)
+- The agent proposes to repeat tasks that the Issue checkboxes already mark as done (`[x]`)
         ↓
   [si MEDIO/DIFÍCIL]         [si SIMPLE]
    Researcher                     ↓
@@ -36,7 +38,7 @@ Requisito del usuario
    · research-plan.md             ↓
    · pausa → aprobación           ↓
         ↓ ←────────────────────────┘
-    Planner
+### 0b. Create the Tracking Issue on GitHub
     · detecta stack
     · tech-plan.md (tasks atómicas)
     · actualiza Issue con checklist  ←── label cambia a status:in-progress
