@@ -7,6 +7,7 @@
 
 # Memory de sesión — específica de cada proyecto
 .harness/memory/session-summary.md
+.harness/memory/current-progress.json
 
 # Planes generados en cada sesión — se recrean por proyecto
 .harness/research/research-plan.md
