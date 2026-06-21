@@ -12,7 +12,7 @@ agents:
     activates_when: tech-plan aprobado, o status in_progress en memory
   - path: .harness/agents/reviewer.md
     activates_when: status awaiting_review en memory
-Skillsharness/agents/context-manager.md
+  - path: .harness/agents/context-manager.md
     activates_when: síntomas de degradación, envenenamiento o contexto excesivamente largo
 ---
 
