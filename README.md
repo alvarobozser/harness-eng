@@ -18,7 +18,7 @@ Entorno de control para agentes IA basado en Spec Driven Development. Define có
 ├── research/              ← research-plan.md generado por Researcher
 ├── tech/                  ← tech-plan.md generado por Planner
 └── memory/
-    ├── current-progress.json session  ← cache (status + reference to GitHub Issue)
+    ├── current-progress.json  ← caché de sesión (status + referencia al Issue de GitHub)
     ├── history.md             ← pointer a GitHub Issues (el historial real está en GitHub)
     └── session-summary.md     ← generado por Context Manager al compactar
 ```
@@ -29,7 +29,6 @@ Entorno de control para agentes IA basado en Spec Driven Development. Define có
 Requisito del usuario
         ↓
    Leader evalúa                          ← también consulta Issues abiertos en GitHub
-- The agent proposes to repeat tasks that the Issue checkboxes already mark as done (`[x]`)
         ↓
   [si MEDIO/DIFÍCIL]         [si SIMPLE]
    Researcher                     ↓
@@ -38,7 +37,7 @@ Requisito del usuario
    · research-plan.md             ↓
    · pausa → aprobación           ↓
         ↓ ←────────────────────────┘
-### 0b. Create the Tracking Issue on GitHub
+   Planner
     · detecta stack
     · tech-plan.md (tasks atómicas)
     · actualiza Issue con checklist  ←── label cambia a status:in-progress
@@ -79,27 +78,24 @@ Cualquier agente detecta síntoma
 
 ## Instalación en un proyecto
 
-Clona este repo y ejecuta el script de instalación apuntando al directorio de tu proyecto:
+Ejecuta desde el directorio de tu proyecto (sin necesidad de clonar nada):
 
 ```bash
 # macOS / Linux
-git clone https://github.com/alvarobozser/harness-eng.git
-./harness-eng/install.sh /ruta/a/tu-proyecto
+curl -fsSL https://raw.githubusercontent.com/alvarobozser/harness-eng/main/install.sh | bash -s -- .
 ```
 
 ```powershell
 # Windows
-git clone https://github.com/alvarobozser/harness-eng.git
-.\harness-eng\install.ps1 -Target C:\ruta\a\tu-proyecto
+& ([scriptblock]::Create((irm 'https://raw.githubusercontent.com/alvarobozser/harness-eng/main/install.ps1'))) -Target .
 ```
 
-El script copia `CLAUDE.md`, `AGENTS.md` y toda la carpeta `.harness/` (agentes, skills, memoria vacía).
+El script descarga `CLAUDE.md`, `AGENTS.md` y toda la carpeta `.harness/` directamente desde GitHub.
 
 > Tras instalar, edita las referencias a `owner`/`repo` en `.harness/agents.md` y los agentes individuales para apuntar a tu repositorio de GitHub.
 
 ```bash
 # Opcional pero recomendado para proyectos grandes
-cd tu-proyecto
 codegraph init -i
 ```
 

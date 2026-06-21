@@ -1,9 +1,8 @@
 param(
-    [Parameter(Mandatory=$true, HelpMessage="Ruta al proyecto destino")]
-    [string]$Target
+    [string]$Target = "."
 )
 
-$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$BaseUrl = "https://raw.githubusercontent.com/alvarobozser/harness-eng/main"
 
 if (-not (Test-Path $Target)) {
     Write-Error "El directorio '$Target' no existe"
@@ -11,9 +10,6 @@ if (-not (Test-Path $Target)) {
 }
 
 Write-Host "Instalando Harness SDD en $Target..."
-
-Copy-Item "$ScriptDir\CLAUDE.md" "$Target\CLAUDE.md" -Force
-Copy-Item "$ScriptDir\AGENTS.md" "$Target\AGENTS.md" -Force
 
 $dirs = @(
     "$Target\.harness\agents",
@@ -26,9 +22,22 @@ foreach ($d in $dirs) {
     New-Item -ItemType Directory -Force -Path $d | Out-Null
 }
 
-Copy-Item "$ScriptDir\.harness\agents.md"    "$Target\.harness\agents.md" -Force
-Copy-Item "$ScriptDir\.harness\agents\*.md"  "$Target\.harness\agents\" -Force
-Copy-Item "$ScriptDir\.harness\skills\*.md"  "$Target\.harness\skills\" -Force
+$files = @(
+    "CLAUDE.md",
+    "AGENTS.md",
+    ".harness/agents.md",
+    ".harness/agents/researcher.md",
+    ".harness/agents/planner.md",
+    ".harness/agents/implementer.md",
+    ".harness/agents/reviewer.md",
+    ".harness/agents/context-manager.md",
+    ".harness/skills/coding-standards.md"
+)
+
+foreach ($f in $files) {
+    $localPath = Join-Path $Target ($f -replace '/', '\')
+    Invoke-WebRequest -Uri "$BaseUrl/$f" -OutFile $localPath -UseBasicParsing
+}
 
 if (-not (Test-Path "$Target\.harness\research\.gitkeep")) {
     New-Item -ItemType File -Path "$Target\.harness\research\.gitkeep" | Out-Null

@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET="${1:-}"
-
-if [[ -z "$TARGET" ]]; then
-  echo "Usage: ./install.sh <target-project-dir>"
-  exit 1
-fi
+TARGET="${1:-.}"
+BASE_URL="https://raw.githubusercontent.com/alvarobozser/harness-eng/main"
 
 if [[ ! -d "$TARGET" ]]; then
   echo "Error: el directorio '$TARGET' no existe"
@@ -16,18 +11,28 @@ fi
 
 echo "Instalando Harness SDD en $TARGET..."
 
-cp "$SCRIPT_DIR/CLAUDE.md" "$TARGET/CLAUDE.md"
-cp "$SCRIPT_DIR/AGENTS.md" "$TARGET/AGENTS.md"
+mkdir -p \
+  "$TARGET/.harness/agents" \
+  "$TARGET/.harness/skills" \
+  "$TARGET/.harness/memory" \
+  "$TARGET/.harness/research" \
+  "$TARGET/.harness/tech"
 
-mkdir -p "$TARGET/.harness/agents"
-mkdir -p "$TARGET/.harness/skills"
-mkdir -p "$TARGET/.harness/memory"
-mkdir -p "$TARGET/.harness/research"
-mkdir -p "$TARGET/.harness/tech"
+FILES=(
+  "CLAUDE.md"
+  "AGENTS.md"
+  ".harness/agents.md"
+  ".harness/agents/researcher.md"
+  ".harness/agents/planner.md"
+  ".harness/agents/implementer.md"
+  ".harness/agents/reviewer.md"
+  ".harness/agents/context-manager.md"
+  ".harness/skills/coding-standards.md"
+)
 
-cp "$SCRIPT_DIR/.harness/agents.md"     "$TARGET/.harness/agents.md"
-cp "$SCRIPT_DIR/.harness/agents/"*.md   "$TARGET/.harness/agents/"
-cp "$SCRIPT_DIR/.harness/skills/"*.md   "$TARGET/.harness/skills/"
+for f in "${FILES[@]}"; do
+  curl -fsSL "$BASE_URL/$f" -o "$TARGET/$f"
+done
 
 touch "$TARGET/.harness/research/.gitkeep"
 touch "$TARGET/.harness/tech/.gitkeep"
