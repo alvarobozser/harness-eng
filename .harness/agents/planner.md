@@ -107,9 +107,22 @@ Si hay ambigüedad (ej. monorepo): pregunta al usuario antes de continuar.
 - [ ] ¿El orden evita dependencias circulares?
 - [ ] ¿Hay validación específica para cada task?
 
-### 3b. Actualiza el Issue con el checklist de tasks
+### 3b. Crea o actualiza el Issue en GitHub
 
-Lee `github_issue_number` de `.harness/memory/current-progress.json` y actualiza el Issue:
+Lee `github_issue_number` de `.harness/memory/current-progress.json`.
+
+**Si `github_issue_number` es `null`** (tarea SIMPLE sin Researcher previo), crea el Issue primero:
+```
+mcp__github__create_issue
+  owner="alvarobozser"
+  repo="harness-eng"
+  title="{nombre del feature}"
+  body="## Objetivo\n{resumen, 2–3 líneas}\n\n## Tasks\n- [ ] Task 1: {nombre}\n- [ ] Task 2: {nombre}\n...\n\n## Criterios de Aceptación\n- [ ] {criterio}\n\n## Validación Global\n`{comando}`"
+  labels=["harness", "status:in-progress"]
+```
+Guarda el número e URL del Issue creado en `current-progress.json` (`github_issue_number`, `github_issue_url`).
+
+**Si `github_issue_number` ya existe** (tarea MEDIO/DIFÍCIL con Researcher previo), actualiza el Issue:
 ```
 mcp__github__update_issue
   owner="alvarobozser"
